@@ -5,6 +5,7 @@ import clr, sys, json, os, codecs
 clr.AddReference("IronPython.SQLite.dll")
 clr.AddReference("IronPython.Modules.dll")
 import random
+import time
 
 #---------------------------------------
 #	[Required]	Script Information
@@ -319,6 +320,8 @@ def Execute(data):
             word = random.choice(nouns)
             Parent.SendStreamWhisper(MySettings.Streamer,word)
             Parent.SendTwitchMessage(MySettings.Start)
+            global t1
+            t1 = time.time()
             TriggerWord = 0
 
     if data.IsChatMessage() and data.GetParam(0).lower():
@@ -327,10 +330,12 @@ def Execute(data):
         if data.GetParam(0) == word:
             #give user points
             Parent.AddPoints(data.User,data.UserName,MySettings.Payout)
+            timer = time.time() - t1
             #announce winner.
-            Parent.SendTwitchMessage(MySettings.BaseResponse.format(data.UserName,word,MySettings.Payout,Parent.GetCurrencyName()))
+            Parent.SendTwitchMessage(MySettings.BaseResponse.format(data.UserName,word,MySettings.Payout,Parent.GetCurrencyName(),timer))
             #reset secret word to null
             word = ""
+            
 
     return
 
