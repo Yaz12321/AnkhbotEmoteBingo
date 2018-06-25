@@ -316,8 +316,10 @@ def Execute(data):
                 'YouWHY',
                 ]
             
-            global word        
-            word = random.choice(nouns)
+            global word
+            wordnum = Parent.GetRandom(0,len(nouns))
+            word = nouns[wordnum]
+            #word = random.choice(nouns)
             Parent.SendStreamWhisper(MySettings.Streamer,word)
             Parent.SendTwitchMessage(MySettings.Start)
             global t1
