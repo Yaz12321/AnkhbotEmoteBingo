@@ -24,7 +24,8 @@ settingsFile = os.path.join(os.path.dirname(__file__), "settings.json")
 
 # Version:
     # Version 1.0.1:
-        #Fixed bugs
+        # Fixed bugs
+        # Added timer
     # Version 1.0:
         # Official Release
 
