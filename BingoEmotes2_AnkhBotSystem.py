@@ -13,7 +13,7 @@ import time
 ScriptName = "Bingo Emotes2"
 Website = ""
 Creator = "Yaz12321"
-Version = "1.0"
+Version = "1.0.1"
 Description = "Run the game, and let your viewers spam your chat with emotes until they guess the winning one."
 
 settingsFile = os.path.join(os.path.dirname(__file__), "settings.json")
@@ -23,7 +23,10 @@ settingsFile = os.path.join(os.path.dirname(__file__), "settings.json")
 #---------------------------------------
 
 # Version:
-
+    # Version 1.0.1:
+        #Fixed bugs
+    # Version 1.0:
+        # Official Release
 
 
 
@@ -41,7 +44,7 @@ class Settings:
             self.PermissionInfo = ""
             self.StartPerm = "Everyone"
             self.StartPermInfo = ""
-            self.BaseResponse = "{0} has guessed the secret emote. The emote was {1}. {0} has won {2} {3}"
+            self.BaseResponse = "{0} has guessed the secret emote. The emote was {1}. {0} has won {2} {3}. Total time: {4} seconds, or {5} minutes"
             self.Payout = 30
             self.Start = "Bingo has started. Send emotes (one per message) and guess the emote."
             self.TriggerWord = 0
@@ -99,6 +102,11 @@ def ReloadSettings(jsonData):
 
 
 def Execute(data):
+
+##    try:
+##        word
+##    except NameError:
+##        word = ""
 
     
     if data.IsChatMessage() and data.GetParam(0).lower() == MySettings.Command:
@@ -327,16 +335,21 @@ def Execute(data):
             TriggerWord = 0
 
     if data.IsChatMessage() and data.GetParam(0).lower():
-                
-      
-        if data.GetParam(0) == word:
-            #give user points
-            Parent.AddPoints(data.User,data.UserName,MySettings.Payout)
-            timer = time.time() - t1
-            #announce winner.
-            Parent.SendTwitchMessage(MySettings.BaseResponse.format(data.UserName,word,MySettings.Payout,Parent.GetCurrencyName(),timer))
-            #reset secret word to null
-            word = ""
+
+        try:
+            word
+        except NameError:
+            a = 1
+        else:                  
+            if data.GetParam(0) == word:
+                #give user points
+                Parent.AddPoints(data.User,data.UserName,MySettings.Payout)
+                timer = time.time() - t1
+                timermin = timer / 60
+                #announce winner.
+                Parent.SendTwitchMessage(MySettings.BaseResponse.format(data.UserName,word,MySettings.Payout,Parent.GetCurrencyName(),timer,timermin))
+                #reset secret word to null
+                word = ""
             
 
     return

@@ -60,7 +60,7 @@
 },
     "BaseResponse": {
     "type": "textbox",
-    "value": "{0} has guessed the secret emote. The emote was {1}. {0} has won {2} {3}",
+    "value": "{0} has guessed the secret emote. The emote was {1}. {0} has won {2} {3}. Total time: {4} seconds, or {5} minutes",
     "label": "Success message",
     "tooltip": " {0} = user \r\n {1} = winning emote \r\n {2} = payout \r\n {3} = currency name",
     "group": "General"
